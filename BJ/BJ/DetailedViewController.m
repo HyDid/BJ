@@ -11,7 +11,7 @@
 @interface DetailedViewController ()
 @property (nonatomic,strong)UIView *custemview;
 @property (nonatomic,strong)UIButton *addBtn;
-
+@property (nonatomic,copy)NSString *dateString;
 @end
 
 static int HeadH = 60;
@@ -22,7 +22,14 @@ static int ButtonH = 40;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setDefault];
-
+    
+    
+    NSDate *currentDate = [NSDate date];//获取当前时间，日期
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"YYYY/MM/dd hh:mm:ss SS"];
+    [dateFormatter setDateFormat:@"MM/dd hh:mm:ss"];
+    NSString *dateString = [dateFormatter stringFromDate:currentDate];
+    self.dateString = dateString;
 }
 
 -(void)setDefault{
@@ -63,7 +70,7 @@ static int ButtonH = 40;
 }
 
 -(void)addBtnAction{
-    [self.delegate DetailedViewController:self Didaddtext:self.textView.text];
+    [self.delegate DetailedViewController:self Didaddtext:self.textView.text Didadddatetext:self.dateString];
     [self cancelBtnAction];
 }
 

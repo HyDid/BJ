@@ -10,7 +10,7 @@
 
 @class DetailedViewController;
 @protocol DetailedViewControllerDelegate <NSObject>
--(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text;
+-(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text Didadddatetext:(NSString *)datetext;
 @end
 
 @interface DetailedViewController : UIViewController

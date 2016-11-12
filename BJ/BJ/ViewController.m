@@ -13,6 +13,7 @@
 
 @property (nonatomic,strong)UITableView *customTableview;
 @property (copy,nonatomic) NSMutableArray *textArray;
+@property (copy,nonatomic) NSMutableArray *datetextArray;
 @property (assign,nonatomic) BOOL Quanxuan;
 
 @property (nonatomic,strong)UIView *detailedView;
@@ -29,6 +30,12 @@ static int ButtonH = 40;
         _textArray = [NSMutableArray array];
     }
     return _textArray;
+}
+-(NSMutableArray *)datetextArray{
+    if (_datetextArray == nil) {
+        _datetextArray = [NSMutableArray array];
+    }
+    return _datetextArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,9 +90,10 @@ static int ButtonH = 40;
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"id"];;
+    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"id"];;
     
     cell.textLabel.text = self.textArray[indexPath.row];
+    cell.detailTextLabel.text = self.datetextArray[indexPath.row];
     
     return cell;
     
@@ -121,9 +129,10 @@ static int ButtonH = 40;
     
 
     }
--(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text{
+-(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text Didadddatetext:(NSString *)datetext{
     
     [self.textArray addObject:text];
+    [self.datetextArray addObject:datetext];
     [self.customTableview reloadData];
 }
 
@@ -149,6 +158,7 @@ static int ButtonH = 40;
     if (editingStyle ==UITableViewCellEditingStyleDelete) {
         
         [self.textArray removeObject:self.textArray[indexPath.row]];
+        [self.datetextArray removeObject:self.textArray[indexPath.row]];
         [self.customTableview reloadData];
         
     }
@@ -160,9 +170,7 @@ static int ButtonH = 40;
 -(void)addDetailedButtonAction{
     DetailedViewController *Detaile = [[DetailedViewController alloc]init];
     Detaile.delegate = self;
-    [self presentViewController:Detaile animated:YES completion:^{
-        
-    }];
+    [self presentViewController:Detaile animated:YES completion:nil];
     self.Quanxuan = NO;
     [self selectButtonAction];
 
