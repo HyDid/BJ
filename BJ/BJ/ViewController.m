@@ -158,14 +158,12 @@ static int ButtonH = 40;
     if (editingStyle ==UITableViewCellEditingStyleDelete) {
         
         [self.textArray removeObject:self.textArray[indexPath.row]];
-        [self.datetextArray removeObject:self.textArray[indexPath.row]];
+        [self.datetextArray removeObject:self.datetextArray[indexPath.row]];
         [self.customTableview reloadData];
         
     }
     
 }
-
-
 
 -(void)addDetailedButtonAction{
     DetailedViewController *Detaile = [[DetailedViewController alloc]init];
