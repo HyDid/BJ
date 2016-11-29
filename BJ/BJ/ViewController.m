@@ -129,16 +129,10 @@ static int ButtonH = 40;
     
 
     }
--(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text Didadddatetext:(NSString *)datetext{
-    
-    [self.textArray addObject:text];
-    [self.datetextArray addObject:datetext];
-    [self.customTableview reloadData];
-}
+
 
 
 -(void)selectButtonAction{
-    
     
     if (_Quanxuan) {
         self.customTableview.editing = YES;
@@ -151,21 +145,28 @@ static int ButtonH = 40;
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
     return @"删除";
 }
+//当用户提交了一个编辑操作就会调用
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 
 {
     
-    if (editingStyle ==UITableViewCellEditingStyleDelete) {
+    if (editingStyle ==UITableViewCellEditingStyleDelete) return;
         
         [self.textArray removeObject:self.textArray[indexPath.row]];
         [self.datetextArray removeObject:self.datetextArray[indexPath.row]];
+        [self.customTableview deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.customTableview reloadData];
-        
-    }
     
 }
+//默认排序功能
+-(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
 
+    [self.textArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+    [self.datetextArray exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex:destinationIndexPath.row];
+
+}
 -(void)addDetailedButtonAction{
+    
     DetailedViewController *Detaile = [[DetailedViewController alloc]init];
     Detaile.delegate = self;
     [self presentViewController:Detaile animated:YES completion:nil];
@@ -176,12 +177,19 @@ static int ButtonH = 40;
 
 -(void)removeAction:(UIButton *)btn{
     
-
     [self.textArray replaceObjectAtIndex:btn.tag withObject:self.textView.text];
     [self.customTableview reloadData];
     
     [btn.superview removeFromSuperview];
     
+}
+
+#pragma mark Delegate
+-(void)DetailedViewController:(DetailedViewController *)addVc Didaddtext:(NSString *)text Didadddatetext:(NSString *)datetext{
+    
+    [self.textArray addObject:text];
+    [self.datetextArray addObject:datetext];
+    [self.customTableview reloadData];
 }
 
 
